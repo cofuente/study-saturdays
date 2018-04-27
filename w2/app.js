@@ -12,8 +12,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(morgan('dev'));
 
-app.use('/students', studentRouter);
-app.use('/tests', testRouter);
 
 app.use(function(err, req, res, next) {
   console.error(err.stack);
