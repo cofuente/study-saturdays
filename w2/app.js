@@ -3,8 +3,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const db = require('./db/db');
-const Student = require('./routes/student');
-const Test = require('./routes/test');
+const studentRouter = require('./routes/students');
+const testRouter = require('./routes/tests');
 
 app.use(bodyParser.json());
 
@@ -12,6 +12,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(morgan('dev'));
 
+app.use('/students', studentRouter);
+app.use('/tests', testRouter);
 
 app.use(function(err, req, res, next) {
   console.error(err.stack);

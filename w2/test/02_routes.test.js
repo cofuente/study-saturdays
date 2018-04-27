@@ -7,8 +7,8 @@ const agent = request.agent(app);
 
 const db = require('../db/db');
 const Promise = require('bluebird');
-const Student = require('../db/models/students');
-const Test = require('../db/models/tests');
+const Student = require('../db/models/student');
+const Test = require('../db/models/test');
 describe('Routes', () => {
   before(() => {
     return db.sync({ force: true });
@@ -51,10 +51,10 @@ describe('Routes', () => {
       });
     });
 
-    describe('GET /student', () => {
-      xit('retrieves all the students', () => {
+    describe('GET /students', () => {
+      it('retrieves all the students', () => {
         return agent
-          .get('/student')
+          .get('/students')
           .expect('Content-Type', /json/)
           .expect(200)
           .expect(res => {
@@ -64,10 +64,10 @@ describe('Routes', () => {
       });
     });
 
-    describe('GET /student/:id', () => {
-      xit('retrieves a single student by their id', () => {
+    describe('GET /students/:id', () => {
+      it('retrieves a single student by their id', () => {
         return agent
-          .get(`/student/${pepper.id}`)
+          .get(`/students/${pepper.id}`)
           .expect(200)
           .expect(res => {
             if (typeof res.body === 'string') res.body = JSON.parse(res.body);
@@ -75,15 +75,15 @@ describe('Routes', () => {
           });
       });
 
-      xit('returns a 404 error if student does not exist in DB', () => {
-        return agent.get('/student/09432').expect(404);
+      it('returns a 404 error if student does not exist in DB', () => {
+        return agent.get('/students/09432').expect(404);
       });
     });
 
-    describe('POST /student', () => {
-      xit('creates a new Student instance', () => {
+    describe('POST /students', () => {
+      it('creates a new Student instance', () => {
         return agent
-          .post('/student')
+          .post('/students')
           .send({
             firstName: 'SQL',
             lastName: 'PRK',
@@ -97,10 +97,10 @@ describe('Routes', () => {
       });
     });
 
-    describe('PUT /student/:id', () => {
-      xit('updates an instance of a student', () => {
+    describe('PUT /students/:id', () => {
+      it('updates an instance of a student', () => {
         return agent
-          .put(`/student/${pepper.id}`)
+          .put(`/students/${pepper.id}`)
           .send({ firstName: 'Salty' })
           .expect(201)
           .expect('Content-Type', /json/)
@@ -110,10 +110,10 @@ describe('Routes', () => {
       });
     });
 
-    describe('DELETE /student/:id', () => {
-      xit('deletes an instance of a student', () => {
+    describe('DELETE /students/:id', () => {
+      it('deletes an instance of a student', () => {
         return agent
-          .delete(`/student/${charlie.id}`)
+          .delete(`/students/${charlie.id}`)
           .expect(204)
           .expect(() => {
             return Student.findById(charlie.id).then(res =>
@@ -162,10 +162,10 @@ describe('Routes', () => {
       ]);
     });
 
-    describe('GET /test', () => {
-      xit('retrieves all tests', () => {
+    describe('GET /tests', () => {
+      it('retrieves all tests', () => {
         return agent
-          .get('/test')
+          .get('/tests')
           .expect(200)
           .expect(res => {
             expect(res.body).to.be.an.instanceOf(Array);
@@ -174,10 +174,10 @@ describe('Routes', () => {
       });
     });
 
-    describe('GET /test/:id', () => {
-      xit('gets the test instance by id', () => {
+    describe('GET /tests/:id', () => {
+      it('gets the test instance by id', () => {
         return agent
-          .get(`/test/${funTest.id}`)
+          .get(`/tests/${funTest.id}`)
           .expect(200)
           .expect(res => {
             expect(res.body.subject).to.equal(funTest.subject);
@@ -185,10 +185,10 @@ describe('Routes', () => {
       });
     });
 
-    describe('GET /test/passing', () => {
-      xit('gets all the tests that are passing', () => {
+    describe('GET /tests/passing', () => {
+      it('gets all the tests that are passing', () => {
         return agent
-          .get('/test/passing')
+          .get('/tests/passing')
           .expect(200)
           .expect(res => {
             expect(res.body).to.be.an.instanceOf(Array);
@@ -197,10 +197,10 @@ describe('Routes', () => {
       });
     });
 
-    describe('GET /test/subject/:subject', () => {
-      xit('gets all the tests by subject', () => {
+    describe('GET /tests/subject/:subject', () => {
+      it('gets all the tests by subject', () => {
         return agent
-          .get(`/test/subject/${badTest.subject}`)
+          .get(`/tests/subject/${badTest.subject}`)
           .expect(200)
           .expect(res => {
             expect(res.body).to.be.an.instanceOf(Array);
@@ -209,7 +209,7 @@ describe('Routes', () => {
       });
     });
 
-    describe('POST /test/student/:studentId', () => {
+    describe('POST /tests/student/:studentId', () => {
       let student;
       beforeEach(() => {
         return Student.create({
@@ -220,9 +220,9 @@ describe('Routes', () => {
           student = newStudent;
         });
       });
-      xit('creates a new Test instance for a student', () => {
+      it('creates a new Test instance for a student', () => {
         return agent
-          .post(`/test/student/${student.id}`)
+          .post(`/tests/student/${student.id}`)
           .send({
             subject: 'Outdoor Wilderness Survival',
             grade: 43
@@ -234,10 +234,10 @@ describe('Routes', () => {
           });
       });
     });
-    describe('DELETE /test/:id', () => {
-      xit('deletes an instance of test by its id', () => {
+    describe('DELETE /tests/:id', () => {
+      it('deletes an instance of test by its id', () => {
         return agent
-          .delete(`/test/${crayTest.id}`)
+          .delete(`/tests/${crayTest.id}`)
           .expect(204)
           .expect(() => {
             return Test.findById(crayTest.id).then(res => {

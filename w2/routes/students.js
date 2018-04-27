@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const Student = require('../db/models/students');
+const Student = require('../db/models/student');
 
 router.get('/:studentId', function(req, res, next) {
   Student.findById(req.params.studentId)
