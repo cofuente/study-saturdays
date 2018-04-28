@@ -29,6 +29,10 @@ const Student = db.define('student', {
   }
 })
 
+Student.prototype.initials = function() {
+  return `${this.firstName[0]} ${this.lastName[0]}`
+}
+
 module.exports = Student
 
 Student.beforeCreate(studentInstance => {
