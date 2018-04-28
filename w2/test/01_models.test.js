@@ -32,9 +32,9 @@ describe('Models', function() {
     //remove student AFTER EACH test
     //cascade:true `Only used in conjunction with TRUNCATE. Truncates all tables that have foreign-key references to the named table, or to any tables added to the group due to CASCADE`.
     //src: http://docs.sequelizejs.com/class/lib/model.js~Model.html#static-method-truncate
-    // afterEach(function() {
-    //   return Student.truncate({ cascade: true })
-    // })
+    afterEach(function() {
+      return Student.truncate({ cascade: true })
+    })
 
     describe('attributes definition', () => {
       it('includes `firstName`, `lastName`, and `email` fields', () => {
