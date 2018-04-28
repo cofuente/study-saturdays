@@ -18,7 +18,28 @@ const Student = db.define('student', {
     validate: {
       isEmail: true
     }
+  },
+  fullName: {
+    type: Sequelize.VIRTUAL,
+    get() {
+      return (
+        this.getDataValue('firstName') + ' ' + this.getDataValue('lastName')
+      )
+    }
   }
 })
 
 module.exports = Student
+
+Student.beforeCreate(studentInstance => {
+  studentInstance.firstName = properCapitalizationHelperFunc(
+    studentInstance.firstName
+  )
+  studentInstance.lastName = properCapitalizationHelperFunc(
+    studentInstance.lastName
+  )
+})
+
+function properCapitalizationHelperFunc(str) {
+  return str[0].toUpperCase() + str.slice(1).toLowerCase()
+}

@@ -121,7 +121,7 @@ describe('Models', function() {
 
     describe('instance methods', () => {
       describe('initials', () => {
-        xit('should return the initials of a student', () => {
+        it('should return the initials of a student', () => {
           return student.save().then(savedStudent => {
             expect(savedStudent.initials()).to.equal('P P')
           })
