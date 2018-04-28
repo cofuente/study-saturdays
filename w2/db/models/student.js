@@ -28,7 +28,22 @@ const Student = db.define(
       }
     }
   },
-  {}
+  {
+    hooks: {
+      beforeCreate: student => {
+        student.firstName = `${student.firstName[0].toUpperCase()}${student.firstName.slice(
+          1
+        )}`;
+        student.lastName = `${student.lastName[0].toUpperCase()}${student.lastName.slice(
+          1
+        )}`;
+      }
+    }
+  }
 );
+
+Student.prototype.initials = function() {
+  return `${this.firstName[0]} ${this.lastName[0]}`;
+};
 
 module.exports = Student;
